@@ -1,0 +1,48 @@
+{
+  "horas": [
+    {
+      "hora": "09:00",
+      "reservada": false
+    },
+    {
+      "hora": "10:00",
+      "reservada": false
+    },
+    {
+      "hora": "11:00",
+      "reservada": false
+    },
+    {
+      "hora": "12:00",
+      "reservada": false
+    },
+    {
+      "hora": "13:00",
+      "reservada": false
+    },
+    {
+      "hora": "14:00",
+      "reservada": false
+    },
+    {
+      "hora": "15:00",
+      "reservada": false
+    },
+    {
+      "hora": "16:00",
+      "reservada": false
+    },
+    {
+      "hora": "17:00",
+      "reservada": false
+    },
+    {
+      "hora": "18:00",
+      "reservada": false
+    },
+    {
+      "hora": "19:00",
+      "reservada": false
+    }
+  ]
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Reservas Estudio Jurídico</title>
+</head>
+<body>
+  <h1>Calendario de Reservas</h1>
+  <ul id="calendario"></ul>
+
+  <h2>Formulario de Reserva</h2>
+  <form id="formReserva">
+    <input type="text" name="nombre" placeholder="Nombre completo" required><br>
+    <input type="email" name="email" placeholder="Correo electrónico" required><br>
+    <input type="text" name="telefono" placeholder="Teléfono" required><br>
+    <input type="text" name="motivo" placeholder="Motivo de la consulta" required><br>
+    <input type="text" name="hora" placeholder="Hora (ej: 11:00)" required><br>
+    <button type="submit">Reservar</button>
+  </form>
+
+  <p id="mensaje"></p>
+
+  <script>
+    // Función para cargar calendario
+    async function cargarCalendario() {
+      const res = await fetch('/api/reservas');
+      const datos = await res.json();
+      const calendario = document.getElementById('calendario');
+      calendario.innerHTML = '';
+      datos.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = `${item.hora} - ${item.reservada ? "Reservada" : "Disponible"}`;
+        calendario.appendChild(li);
+      });
+    }
+
+    // Formulario de reserva
+    document.getElementById('formReserva').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const datos = Object.fromEntries(formData);
+
+      const res = await fetch('/api/crear-reserva', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
+      });
+
+      const mensaje = document.getElementById('mensaje');
+      if (res.ok) {
+        mensaje.textContent = "✅ Reserva confirmada.";
+      } else {
+        const error = await res.json();
+        mensaje.textContent = `❌ Error: ${error.mensaje}`;
+      }
+
+      cargarCalendario(); // recargar calendario
+    });
+
+    // Al cargar la página
+    cargarCalendario();
+  </script>
+</body>
+</html>
